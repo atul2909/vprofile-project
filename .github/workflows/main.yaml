@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: prod
+    environment: dev
 
     steps:
       - name: Checkout code
@@ -21,13 +21,9 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Build with Maven
-        run: mvn install
-
-      - name: Use Secret
-        run: echo $SUPER_SECRET
-        env:
-          SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
+      - name: Build with Maven if branch = docker
+        if: github.ref == 'refs/heads/docker'
+        run: mvn clean package -DskipTests        
 
   testing:
     runs-on: ubuntu-latest
