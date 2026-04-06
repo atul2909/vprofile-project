@@ -45,10 +45,10 @@ jobs:
       - name: Run Tests
         run: mvn test
 
-      - name: Use Secret
+      - name: Use Var
         run: echo $SUPER_VARIABLE
         env:
-          SUPER_VARIABLE: ${{ secrets.SUPER_VARIABLE }}
+          SUPER_VARIABLE: ${{ vars.SUPER_VARIABLE }}
 
       - name: Maven Checkstyle
         run: mvn checkstyle:checkstyle
