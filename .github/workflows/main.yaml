@@ -1,0 +1,44 @@
+name: Build Vprofile
+
+on:
+  push:
+    branches: [main, develop, docker]
+  pull_request:
+    branches: [main, develop, docker]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build with Maven
+        run: mvn install
+
+  testing:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Run Tests
+        run: mvn test
+
+      - name: Maven Checkstyle
+        run: mvn checkstyle:checkstyle
