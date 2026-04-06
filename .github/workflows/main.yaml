@@ -17,13 +17,16 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: temurin
+          java-version: 17
 
       - name: Build with Maven
-        run: mvn install  
-      - name: Build with Super
+        run: mvn install
+
+      - name: Use Secret
         run: echo $SUPER_SECRET
+        env:
+          SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
 
   testing:
     runs-on: ubuntu-latest
@@ -36,14 +39,16 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: temurin
+          java-version: 17
 
       - name: Run Tests
         run: mvn test
-      
-      - name: Build with Super
-        run: echo $SUPER_VARAIBLE
+
+      - name: Use Secret
+        run: echo $SUPER_VARIABLE
+        env:
+          SUPER_VARIABLE: ${{ secrets.SUPER_VARIABLE }}
 
       - name: Maven Checkstyle
         run: mvn checkstyle:checkstyle
