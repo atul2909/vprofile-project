@@ -21,7 +21,7 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Build with Maven if branch = docker
+      - name: Build with Maven if branch = copy-docker
         if: github.ref == 'refs/heads/docker'
         run: mvn clean package -DskipTests        
 
